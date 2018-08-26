@@ -2,7 +2,6 @@
 
 window.renderStatistics = function (ctx, names, times) {
 
-
     // Рисуем тень
     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctx.beginPath();
@@ -15,7 +14,6 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.lineTo(90,20);
     ctx.fill();
 
-
     // Рисуем облако
     ctx.fillStyle = "rgb(256, 256, 256)";
     ctx.beginPath();
@@ -27,7 +25,6 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.lineTo(130,135);
     ctx.lineTo(80,10);
     ctx.fill();
-
 
     // Выводим текст
     ctx.fillStyle = '#000'

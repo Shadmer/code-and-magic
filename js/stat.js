@@ -39,7 +39,7 @@ window.renderStatistics = function (ctx, names, times) {
     var width = 40;
     var maxHeight = 150;
     var gutter = 90;
-    var step = maxHeight / getMaxElement(times);
+    var step = maxHeight / lib.getMaxElement(times);
 
     for (var i = 0; i < times.length; i++) {
         var height = times[i] * step;
@@ -47,7 +47,7 @@ window.renderStatistics = function (ctx, names, times) {
         if(names[i] === "Вы") {
             ctx.fillStyle = "rgba(255, 0, 0, 1)";;
         } else {
-            ctx.fillStyle = "rgba(46, 49," + getRandom(0, 255) + ", 1)";
+            ctx.fillStyle = "rgba(46, 49," + lib.getRandom(0, 255) + ", 1)";
         }
 
         ctx.fillRect(startX + gutter * i, maxHeight - height + startY, width, height);
@@ -55,20 +55,5 @@ window.renderStatistics = function (ctx, names, times) {
         ctx.fillText(Math.floor(times[i]), startX + gutter * i, startY + maxHeight - height - 10);
     }
 };
-
-
-function getMaxElement(arr) {
-    var max = -1;
-    for (var i = 0; i < arr.length; i++) {
-        if(arr[i] > max) {
-            max = arr[i];
-        }
-    }
-    return max;
-};
-
-function getRandom(min, max) {
-    return Math.floor( min + Math.random() * (max + 1 - min) );
-}
 
 

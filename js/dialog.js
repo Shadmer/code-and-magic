@@ -10,30 +10,29 @@
     var dialogHandle = document.querySelector('.upload');
     // var defaultCoords = {};
 
-    // userDialog.classList.remove('hidden');
+    userDialog.classList.remove('hidden');
 
-    function onPopupEscPress(e) {
+    var onPopupEscPress = function (e) {
         util.isEscEvent(e, closePopup);
-    }
-    function openPopup(e) {
+    };
+    var openPopup = function (e) {
         userDialog.classList.remove('hidden');
         document.addEventListener('keydown', onPopupEscPress);
         // defaultCoords.top = userDialog.offsetTop;
         // defaultCoords.left = userDialog.offsetLeft;
-    }
-    function closePopup(e) {
+    };
+    var closePopup = function (e) {
         userDialog.classList.add('hidden');
         document.removeEventListener('keydown', onPopupEscPress);
         userDialog.style.top = "";
         userDialog.style.left = "";
-
-    }
-    function focusUserName() {
+    };
+    var focusUserName = function () {
         document.removeEventListener('keydown', onPopupEscPress);
-    }
-    function blurUserName() {
+    };
+    var blurUserName = function () {
         document.addEventListener('keydown', onPopupEscPress);
-    }
+    };
 
     setupOpen.addEventListener('click', function (e) {
         openPopup();
@@ -68,7 +67,7 @@
         };
 
 
-        function onMouseMove(moveEvt) {
+        var onMouseMove = function (moveEvt) {
             moveEvt.preventDefault();
             var shift = {
                 x: moveEvt.clientX - startCoords.x,
@@ -82,12 +81,12 @@
 
             userDialog.style.top = (userDialog.offsetTop + shift.y) + 'px';
             userDialog.style.left = (userDialog.offsetLeft + shift.x) + 'px';
-        }
-        function onMouseUp(upEvt) {
+        };
+        var onMouseUp = function (upEvt) {
             upEvt.preventDefault();
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
-        }
+        };
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);

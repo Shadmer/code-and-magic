@@ -39,7 +39,7 @@ window.renderStatistics = function (ctx, names, times) {
     var width = 40;
     var maxHeight = 150;
     var gutter = 90;
-    var step = maxHeight / lib.getMaxElement(times);
+    var step = maxHeight / util.getMaxElement(times);
 
     for (var i = 0; i < times.length; i++) {
         var height = times[i] * step;
@@ -47,7 +47,7 @@ window.renderStatistics = function (ctx, names, times) {
         if(names[i] === "Вы") {
             ctx.fillStyle = "rgba(255, 0, 0, 1)";;
         } else {
-            ctx.fillStyle = "rgba(46, 49," + lib.getRandom(0, 255) + ", 1)";
+            ctx.fillStyle = "rgba(46, 49," + util.getRandom(0, 255) + ", 1)";
         }
 
         ctx.fillRect(startX + gutter * i, maxHeight - height + startY, width, height);

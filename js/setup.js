@@ -5,6 +5,10 @@
     var WIZARD_SURNAMES = ["да Марья", "Верон", "Мирабелла", "Вальц", "Онопко", "Топольницкая", "Нионго", "Ирвинг"];
     var WIZARD_COATS = ["rgb(101, 137, 164)", "rgb(241, 43, 107)", "rgb(146, 100, 161)", "rgb(56, 159, 117)", "rgb(215, 210, 55)", "rgb(0, 0, 0)"];
     var WIZARD_EYES = ["black", "red", "blue", "yellow", "green"];
+    var WIZZARD_FIREBALLS = ["#ee4830", "#30a8ee", "#5ce6c0", "#e848d5", "#e6e848"];
+    var wizardCoat = document.querySelector('.wizard-coat');
+    var wizardEyes = document.querySelector('.wizard-eyes');
+    var wizardFireball = document.querySelector('.setup-fireball-wrap');
 
     document.querySelector(".setup-similar").classList.remove("hidden");
 
@@ -47,5 +51,21 @@
         fragment.appendChild(renderWizard(wizards[i]));
     }
     similarListElement.appendChild(fragment);
+
+
+    var fillElement = function(elem, color) {
+        var i = util.getRandom(0, color.length - 1);
+        elem.style.fill = color[i];
+    };
+
+    var changeElementBackground = function(elem, color) {
+        var i = util.getRandom(0, color.length - 1);
+        elem.style.backgroundColor = color[i];
+    };
+
+
+    window.colorizeElement(wizardCoat, WIZARD_COATS, fillElement);
+    window.colorizeElement(wizardEyes, WIZARD_EYES, fillElement);
+    window.colorizeElement(wizardFireball, WIZZARD_FIREBALLS, changeElementBackground);
 })();
 

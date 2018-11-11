@@ -6,11 +6,7 @@
     var setupOpenIcon = document.querySelector('.setup-open-icon');
     var setupClose = document.querySelector('.setup-close');
     var setupUserName = document.querySelector('.setup-user-name');
-    // var dialogHandle = document.querySelector('.setup-user-pic');
     var dialogHandle = document.querySelector('.upload');
-    // var defaultCoords = {};
-
-    userDialog.classList.remove('hidden');
 
     var onPopupEscPress = function (e) {
         util.isEscEvent(e, closePopup);
@@ -18,8 +14,6 @@
     var openPopup = function (e) {
         userDialog.classList.remove('hidden');
         document.addEventListener('keydown', onPopupEscPress);
-        // defaultCoords.top = userDialog.offsetTop;
-        // defaultCoords.left = userDialog.offsetLeft;
     };
     var closePopup = function (e) {
         userDialog.classList.add('hidden');
@@ -92,22 +86,22 @@
         document.addEventListener('mouseup', onMouseUp);
     });
 
-    // Второй подход смещения
-    // userDialog.addEventListener('mousedown', function (e) {
-    //     e.preventDefault();
-    //
-    //     function onMouseMove(moveEvt) {
-    //         userDialog.style.top = moveEvt.clientY + 'px';
-    //         userDialog.style.left = moveEvt.clientX + 'px';
-    //     }
-    //
-    //     function onMouseUp(upEvt) {
-    //         document.removeEventListener('mousemove', onMouseMove);
-    //         document.removeEventListener('mouseup', onMouseUp);
-    //     }
-    //
-    //     document.addEventListener('mousemove', onMouseMove);
-    //     document.addEventListener('mouseup', onMouseUp);
-    // });
+    /*Второй подход смещения
+    userDialog.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+
+        function onMouseMove(moveEvt) {
+            userDialog.style.top = moveEvt.clientY + 'px';
+            userDialog.style.left = moveEvt.clientX + 'px';
+        }
+
+        function onMouseUp(upEvt) {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    });*/
 })();
 

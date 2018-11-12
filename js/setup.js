@@ -25,8 +25,6 @@
     window.colorizeElement(wizardEyes, WIZARD_EYES, fillElement);
     window.colorizeElement(wizardFireball, WIZARD_FIREBALLS, changeElementBackground);
 
-    /*Отрисовка похожих волшебников*/
-    document.querySelector(".setup-similar").classList.remove("hidden");
     // Шаблон волшебника
     var similarWizardTemplate = document.querySelector("#similar-wizard-template")
         .content
@@ -63,23 +61,40 @@
         return wizardElement;
     };
 
-    backend.load(function (wizards) {
+    var onWizardsLoad = function(wizards) {
         var fragment = document.createDocumentFragment();
         for (var i = 0; i < numberOfWizards; i++) {
             fragment.appendChild(renderWizard(wizards[i]));
         }
         similarListElement.appendChild(fragment);
-    });
+        document.querySelector(".setup-similar").classList.remove("hidden");
+    };
+
+    var onWizardsError = function(errorMessage) {
+        var node = document.createElement('div');
+        node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+        node.style.position = 'absolute';
+        node.style.left = 0;
+        node.style.right = 0;
+        node.style.fontSize = '30px';
+        node.textContent = errorMessage;
+        document.body.insertAdjacentElement('afterbegin', node);
+    };
+
+    backend.load(onWizardsLoad, onWizardsError);
 
     // save
     var userDialog = document.querySelector(".setup");
     var form = document.querySelector(".setup-wizard-form");
+    var formData = new FormData(form);
+
+    var onWizardsSave = function() {
+        userDialog.classList.add('hidden');
+    };
+
     userDialog.classList.remove('hidden');
     form.addEventListener('submit', function (e) {
-
-        backend.save(new FormData(form), function (response) {
-            userDialog.classList.add('hidden');
-        });
+        backend.save(formData, onWizardsSave, onWizardsError);
         e.preventDefault();
     });
 })();

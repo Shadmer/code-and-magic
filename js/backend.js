@@ -1,33 +1,54 @@
 'use strict';
 
 (function() {
-    var URL = "https://js.dump.academy/code-and-magick";
-
     window.backend = {
 
         load: function(onLoad, onError) {
+            var URL = "https://js.dump.academy/code-and-magick/data";
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'json';
 
             xhr.addEventListener('load', function () {
-                onLoad(xhr.response);
+                switch (xhr.status) {
+                    case 200:
+                        onLoad(xhr.response);
+                        break;
+
+                    default:
+                        onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+                }
             });
 
+            xhr.addEventListener('error', function () {
+                onError('Произошла ошибка соединения');
+            });
 
-            xhr.open('GET', "https://js.dump.academy/code-and-magick/data");
+            xhr.addEventListener('timeout', function () {
+                onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+            });
+
+            xhr.timeout = 10000;
+            xhr.open('GET', URL);
             xhr.send();
         },
 
         save: function(data, onLoad, onError) {
+            var URL = "https://js.dump.academy/code-and-magick";
             var xhr = new XMLHttpRequest();
             xhr.responseType = 'json';
 
             xhr.addEventListener('load', function () {
-                //xhr.response - что это???
-                onLoad(xhr.response);
+                switch (xhr.status) {
+                    case 200:
+                        onLoad(xhr.response);
+                        break;
+
+                    default:
+                        onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+                }
             });
 
-            xhr.open('POST', "https://js.dump.academy/code-and-magick");
+            xhr.open('POST', URL);
             xhr.send(data);
         }
     };

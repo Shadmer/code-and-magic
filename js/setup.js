@@ -12,6 +12,9 @@
     var wizardEyes = document.querySelector('.wizard-eyes');
     var wizardFireball = document.querySelector('.setup-fireball-wrap');
 
+    var coatColor;
+    var eyesColor;
+
     var fillElement = function (elem, color) {
         var i = util.getRandom(0, color.length - 1);
         elem.style.fill = color[i];
@@ -25,6 +28,8 @@
     window.colorizeElement(wizardEyes, WIZARD_EYES, fillElement);
     window.colorizeElement(wizardFireball, WIZARD_FIREBALLS, changeElementBackground);
 
+    console.log(wizardCoat.style.fill);
+
     // Шаблон волшебника
     var similarWizardTemplate = document.querySelector("#similar-wizard-template")
         .content
@@ -32,6 +37,45 @@
     var similarListElement = document.querySelector(".setup-similar-list");
     var numberOfWizards = 4;
 
+
+    //Сортировка массива волшебников
+    /*
+    * Берём загруженный массив волшебников
+    * Сортируем
+    * ???????
+    * ПРОФИТ!
+    * */
+
+    var getRank = function (wizard) {
+        var rank = 0;
+
+        if (wizard.colorCoat === coatColor) {
+            rank += 2;
+        }
+        if (wizard.colorEyes === eyesColor) {
+            rank += 1;
+        }
+
+        return rank;
+    };
+
+    var updateWizards = function (wizards) {
+
+
+        wizards.sort(function (a, b) {
+            if (a.name > b.name) {
+                return 1;
+            }
+            else if (a.name < b.name) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        });
+
+
+    };
 
     //Старая генерация волшебника
     /*var getWizard = function () {
@@ -60,38 +104,37 @@
         wizardElement.querySelector(".wizard-eyes").style.fill = wizard.colorEyes;
         return wizardElement;
     };
+    var onWizardsLoad = function (wizards) {
 
-    var onWizardsLoad = function(wizards) {
+        updateWizards(wizards);
+
         var fragment = document.createDocumentFragment();
         for (var i = 0; i < numberOfWizards; i++) {
             fragment.appendChild(renderWizard(wizards[i]));
+            console.log(wizards[i].colorCoat);
         }
         similarListElement.appendChild(fragment);
         document.querySelector(".setup-similar").classList.remove("hidden");
     };
-
-    var onWizardsError = function(errorMessage) {
+    var onWizardsError = function (errorMessage) {
         var node = document.createElement('div');
         node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
         node.style.position = 'absolute';
-        node.style.left = 0;
-        node.style.right = 0;
+        node.style.left = '0';
+        node.style.right = '0';
         node.style.fontSize = '30px';
         node.textContent = errorMessage;
         document.body.insertAdjacentElement('afterbegin', node);
     };
-
     backend.load(onWizardsLoad, onWizardsError);
 
     // save
     var userDialog = document.querySelector(".setup");
     var form = document.querySelector(".setup-wizard-form");
     var formData = new FormData(form);
-
-    var onWizardsSave = function() {
+    var onWizardsSave = function () {
         userDialog.classList.add('hidden');
     };
-
     userDialog.classList.remove('hidden');
     form.addEventListener('submit', function (e) {
         backend.save(formData, onWizardsSave, onWizardsError);

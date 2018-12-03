@@ -28,54 +28,14 @@
     window.colorizeElement(wizardEyes, WIZARD_EYES, fillElement);
     window.colorizeElement(wizardFireball, WIZARD_FIREBALLS, changeElementBackground);
 
-    console.log(wizardCoat.style.fill);
+
 
     // Шаблон волшебника
     var similarWizardTemplate = document.querySelector("#similar-wizard-template")
         .content
         .querySelector(".setup-similar-item");
     var similarListElement = document.querySelector(".setup-similar-list");
-    var numberOfWizards = 4;
 
-
-    //Сортировка массива волшебников
-    /*
-    * Берём загруженный массив волшебников
-    * Сортируем
-    * ???????
-    * ПРОФИТ!
-    * */
-
-    var getRank = function (wizard) {
-        var rank = 0;
-
-        if (wizard.colorCoat === coatColor) {
-            rank += 2;
-        }
-        if (wizard.colorEyes === eyesColor) {
-            rank += 1;
-        }
-
-        return rank;
-    };
-
-    var updateWizards = function (wizards) {
-
-
-        wizards.sort(function (a, b) {
-            if (a.name > b.name) {
-                return 1;
-            }
-            else if (a.name < b.name) {
-                return -1;
-            }
-            else {
-                return 0;
-            }
-        });
-
-
-    };
 
     //Старая генерация волшебника
     /*var getWizard = function () {
@@ -96,6 +56,24 @@
         wizards.push(getWizard());
     }*/
 
+    var getRank = function (wizard) {
+        var rank = 0;
+
+        if (wizard.colorCoat === coatColor) {
+            rank += 2;
+        }
+        if (wizard.colorEyes === eyesColor) {
+            rank += 1;
+        }
+
+        return rank;
+    };
+
+    var updateWizards = function (wizards) {
+
+
+    };
+
     //load
     var renderWizard = function (wizard) {
         var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -105,13 +83,13 @@
         return wizardElement;
     };
     var onWizardsLoad = function (wizards) {
+        var numberOfWizards = 4;
 
-        updateWizards(wizards);
+        // updateWizards(wizards);
 
         var fragment = document.createDocumentFragment();
         for (var i = 0; i < numberOfWizards; i++) {
             fragment.appendChild(renderWizard(wizards[i]));
-            console.log(wizards[i].colorCoat);
         }
         similarListElement.appendChild(fragment);
         document.querySelector(".setup-similar").classList.remove("hidden");

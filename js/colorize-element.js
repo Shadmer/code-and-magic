@@ -2,9 +2,9 @@
 
 (function() {
 
-    window.colorizeElement = function (elem, colors, setColor) {
+    window.colorizeElement = function (elem, colors, setColor, update) {
         elem.addEventListener('click', function () {
-            setColor(elem, colors);
+            setColor(elem, colors, update);
         });
     };
 

@@ -6,7 +6,7 @@
     var setupOpenIcon = document.querySelector('.setup-open-icon');
     var setupClose = document.querySelector('.setup-close');
     var setupUserName = document.querySelector('.setup-user-name');
-    var dialogHandle = document.querySelector('.upload');
+    var dialogHandler = document.querySelector('.upload');
 
     var onPopupEscPress = function (e) {
         util.isEscEvent(e, closePopup);
@@ -46,13 +46,11 @@
     setupUserName.addEventListener('blur', function () {
         blurUserName();
     });
+    dialogHandler.addEventListener('click', function (e) {
 
-    dialogHandle.addEventListener('click', function (e) {
-        e.preventDefault();
     });
-
     // первый подход смещения
-    dialogHandle.addEventListener('mousedown', function (e) {
+    dialogHandler.addEventListener('mousedown', function (e) {
         e.preventDefault();
 
         var startCoords = {
@@ -60,8 +58,10 @@
             y: e.clientY
         };
 
+        var dragged = false;
 
         var onMouseMove = function (moveEvt) {
+            dragged = true;
             moveEvt.preventDefault();
             var shift = {
                 x: moveEvt.clientX - startCoords.x,
@@ -80,12 +80,20 @@
             upEvt.preventDefault();
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
+
+            if (dragged) {
+                var onClickPrevent = function (e) {
+                    e.preventDefault();
+                    dragged = false;
+                    dialogHandler.removeEventListener('click', onClickPrevent);
+                };
+                dialogHandler.addEventListener('click', onClickPrevent);
+            }
         };
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
     });
-
     /*Второй подход смещения
     userDialog.addEventListener('mousedown', function (e) {
         e.preventDefault();
